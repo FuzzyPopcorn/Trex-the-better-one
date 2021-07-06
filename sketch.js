@@ -36,7 +36,7 @@ function preload(){
 function setup() {
     createCanvas(displayWidth, 200);
   
-  trex = createSprite(50,190,20,50);
+  trex = createSprite(50,185,20,50);
   
   trex.addAnimation("running", trex_running);
   trex.addAnimation("collided", trex_collided);
@@ -45,16 +45,16 @@ function setup() {
   ground = createSprite(200,190,400,20);
   ground.addImage("ground",groundImage);
   ground.x = ground.width /2;
-  trex.collide(ground);
+  //trex.collide(ground);
   ground.velocityX = -(6 + 3*score/100);
   
-  gameOver = createSprite(displayWidth/2,80,20,20);
+  gameOver = createSprite(displayWidth/2,90,20,20);
   gameOver.addImage(gameOverImg);
   
-  restart = createSprite(displayWidth/2,140, 20, 20);
+  restart = createSprite(displayWidth/2,130, 20, 20);
   restart.addImage(restartImg);
   
-  invisibleGround = createSprite(trex.x,190,400,10);
+  invisibleGround = createSprite(trex.x,195,400,10);
   invisibleGround.visible = false;
   invisibleGround.collide(ground);
   
@@ -71,24 +71,26 @@ function setup() {
 }
 
 function draw() {
-  
+    
   camera.x = trex.x;
   camera.y = trex.y;
 
-  gameOver.position.x = restart.position.x = camera.x + 50
+  gameOver.position.x = restart.position.x = camera.x + 100
 
   background(180);
   
   textAlign(RIGHT, TOP);
-  text("Score: "+ score, 600,5);
+  textSize(20)
+  text("Score: "+ score,  camera.position.x-200,80);
  
   if (gameState===PLAY){
     score = score + Math.round(getFrameRate()/60);
     ground.velocityX = -(6 + 3*score/100);
     
 
-    if(keyDown("space") && trex.y >= 159) {
+    if(keyIsDown(UP_ARROW) && trex.y >= 159) {
       trex.velocityY = -12;
+      trex.y =  trex.y-12;
     }
    
     
